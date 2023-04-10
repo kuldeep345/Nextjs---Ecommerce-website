@@ -1,4 +1,4 @@
-import {defineType, defineField} from 'sanity'
+import { defineType, defineField } from 'sanity'
 
 export const banner = defineType({
   title: "Banner",
@@ -8,11 +8,10 @@ export const banner = defineType({
     defineField({
       title: "image",
       name: "Image",
-      type: "array",
-      of:[{type:'image'}],
-      options:{
-        hotspot:true
-      }
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
     }),
     defineField({
       title: "buttonText",
@@ -25,39 +24,39 @@ export const banner = defineType({
       type: "string",
     }),
     defineField({
-        name:"desc",
-        title:'Desc',
-        type:'string'
+      name: "desc",
+      title: 'Desc',
+      type: 'string'
     }),
     defineField({
-        name:'smallText',
-        title:'SmallText',
-        type:'string'
+      name: 'smallText',
+      title: 'SmallText',
+      type: 'string'
     }),
     defineField({
-        name:'midText',
-        title:'MidText',
-        type:'string'
+      name: 'midText',
+      title: 'MidText',
+      type: 'string'
     }),
     defineField({
-        name:'largeText1',
-        title:'LargeText1',
-        type:'string'
+      name: 'largeText1',
+      title: 'LargeText1',
+      type: 'string'
     }),
     defineField({
-        name:'largeText2',
-        title:'LargeText2',
-        type:'string'
+      name: 'largeText2',
+      title: 'LargeText2',
+      type: 'string'
     }),
     defineField({
-        name:'discount',
-        title:'Discount',
-        type:'string'
+      name: 'discount',
+      title: 'Discount',
+      type: 'string'
     }),
     defineField({
-        name:'saleTime',
-        title:'SaleTime',
-        type:'string'
+      name: 'saleTime',
+      title: 'SaleTime',
+      type: 'string'
     }),
   ]
 })
