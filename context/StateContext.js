@@ -1,3 +1,4 @@
+import { product } from '@/ecom/schemas/product';
 import React , { createContext , useContext , useState , useEffect } from 'react';
 import { toast } from 'react-hot-toast'
 
@@ -15,12 +16,17 @@ export const StateContext = ({children})=>{
 
     const [qty , setQty] = useState(1)
 
+    console.log(totalPrice)
+
+    let foundProduct;
+    let index;
+
     const onAdd = (product , quantity) => {
         const checkProductInCard = cartItems.find((item) => item._id === product._id)
 
         if(checkProductInCard){
-            setTotalPrice(totalPrice + product.price * quantity);
-            setTotalQuantities(prev + quantity)
+            setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+            setTotalQuantities(totalQuantities + quantity)
             
             const updatedCartItems = cartItems.map((cartProduct) => {
                 if(cartProduct._id === product._id) return {
@@ -40,6 +46,34 @@ export const StateContext = ({children})=>{
             toast.success(`${qty} ${product.Name} added to the cart`)
         }
 
+    }
+
+    const onRemove = (product) => {
+        foundProduct = cartItems.find((item) => item._id === product._id);
+        const newCartItems = cartItems.filter((item) => item._id !== product._id);
+
+        setTotalPrice((prevTotalPrice) => prevTotalPrice -foundProduct.price * foundProduct.quantity);
+        setTotalQuantities((prev) => prev - foundProduct.quantity)
+        setCartItems(newCartItems)
+    }
+
+    const toggleCartItemQuantity = (id,value)=>{
+        foundProduct = cartItems.find((item) => item._id === id)
+        index = cartItems.findIndex((product) => product._id === id)
+        const newCartItems = cartItems.filter((item)=> item._id !== id)
+
+        if(value === 'inc'){
+            setCartItems([...newCartItems , {...foundProduct , quantity:foundProduct.quantity + 1}])
+            setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price)
+            setTotalQuantities(totalQuantities + 1);
+        }
+        else if(value='dec'){
+            if(foundProduct.quantity > 1){
+                setCartItems([...newCartItems , {...foundProduct , quantity:foundProduct.quantity - 1}])
+                setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price)
+                setTotalQuantities(totalQuantities - 1);
+            }
+        }
     }
 
     const incQty = () => {
@@ -64,7 +98,9 @@ export const StateContext = ({children})=>{
             qty,
             incQty,
             decQty,
-            onAdd
+            onAdd,
+            toggleCartItemQuantity,
+            onRemove
         }}>
             {children}
         </Context.Provider>
