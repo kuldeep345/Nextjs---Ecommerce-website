@@ -13,25 +13,25 @@ const Cart = () => {
   const { totalPrice, totalQuantities, cartItems, setShowCart, qty,
     incQty, decQty , toggleCartItemQuantity , onRemove } = useStateContext()
 
-  const handleCheckout = async()=>{
-    const stripe = await getStripe();
+  // const handleCheckout = async()=>{
+  //   const stripe = await getStripe();
 
-    const response = await fetch('/api/stripe', {
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(cartItems)
-    })
+  //   const response = await fetch('/api/stripe', {
+  //     method:'POST',
+  //     headers:{
+  //       'Content-Type':'application/json'
+  //     },
+  //     body:JSON.stringify(cartItems)
+  //   })
 
-    if(response.statusCode === 500) return
+  //   if(response.statusCode === 500) return
 
-    const data = await response.json()
+  //   const data = await response.json()
 
-    toast.loading('Redirecting...')
+  //   toast.loading('Redirecting...')
 
-    stripe.redirectToCheckout({sessionId:data.id})
-  }
+  //   stripe.redirectToCheckout({sessionId:data.id})
+  // }
 
 
 
@@ -101,7 +101,7 @@ const Cart = () => {
                   <h3>${totalPrice}</h3>
                 </div>
                 <div className='btn-container'>
-                  <button type='btn' className='btn' onClick={handleCheckout}>
+                  <button type='btn' className='btn'>
                     Pay with Stripe
                   </button>
                 </div>
